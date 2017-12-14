@@ -7,6 +7,8 @@ typedef output_t<A0> LED0;
 typedef output_t<A1> LED1;
 typedef output_t<A2> LED2;
 typedef output_t<A3> LED3;
+typedef output_t<LED_RX> LED4;
+typedef output_t<LED_TX> LED5;
 
 void setup()
 {
@@ -16,6 +18,8 @@ void setup()
     LED1::setup();
     LED2::setup();
     LED3::setup();
+    LED4::setup();
+    LED5::setup();
 }
 
 struct toggler_t
@@ -41,12 +45,15 @@ void loop()
     static toggler_t output1(5);
     static toggler_t output2(7);
     static toggler_t output3(11);
+    bool b2, b3;
 
     BOARD::set(board.toggle(i));
     LED0::set(output0.toggle(i));
     LED1::set(output1.toggle(i));
-    LED2::set(output2.toggle(i));
-    LED3::set(output3.toggle(i));
+    LED2::set(b2 = output2.toggle(i));
+    LED3::set(b3 = output3.toggle(i));
+    LED4::set(b2);
+    LED5::set(b3);
 
     delay(50);
     ++i;
